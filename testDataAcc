@@ -1,0 +1,11 @@
+
+load ('testSet.mat');
+load('NN.mat');
+right = 0;
+for n =1:10000;
+    guess = testMatrix(n, finalW1L1, finalW1L2, finalB1L1, finalB1L2, finalSoftmaxTheta );
+    right += guess== testlLabels(n,1);
+end
+
+correctness = right/10000;
+    
