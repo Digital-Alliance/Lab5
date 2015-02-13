@@ -5,7 +5,7 @@ function [ total ] = rgb2b( image, finalW1L1, finalW1L2, finalB1L1, finalB1L2, f
     image = rgb2gray(image);
    % image = imfill(image);
     %image = imadjust(image);
-    level = 0.7;  %graythresh(image2);
+    level = 0.65;  %graythresh(image2);
     oImage = im2bw(image, level);
     %imshow(oImage);
    % se90 = strel('line', 3, 90);
@@ -29,15 +29,12 @@ function [ total ] = rgb2b( image, finalW1L1, finalW1L2, finalB1L1, finalB1L2, f
           if(oImage(i,j)==0)
               width = width+1;
               if(width>300 && flag<1)
-                  i = i+3;
+                  i = 1;
                   flag =1;
               end
           else
               if(width>300)
                   locx = j-width;
-                  locy = i;
-                  disp(locx);
-                  disp(locy);
                   break;
               else
                   width =0;
@@ -45,9 +42,6 @@ function [ total ] = rgb2b( image, finalW1L1, finalW1L2, finalB1L1, finalB1L2, f
           end
       end
    end
-   disp(size(oImage));
-   disp(locx+width);
-   disp(locy);
    oImage2 = oImage(locy:locy+175, locx:locx+width);
    total = 0;
    for l = 1:3
