@@ -2,7 +2,8 @@ function rgb2blackMult( )
 
 for y = 1:37
     rgb2black(y);
-    pause(5);
+    disp(y);
+    pause(1);
 end
 end
 

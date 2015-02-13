@@ -1,8 +1,7 @@
-function [ oImage2 ] = rgb2black( index )
+function [ total ] = rgb2b( image, finalW1L1, finalW1L2, finalB1L1, finalB1L2, finalSoftmaxTheta )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-    loc = sprintf('image%d.jpg', index);
-    image = imread(loc);
+
     image = rgb2gray(image);
    % image = imfill(image);
     %image = imadjust(image);
@@ -51,15 +50,12 @@ function [ oImage2 ] = rgb2black( index )
    disp(locy);
    oImage2 = oImage(locy:locy+175, locx:locx+width);
    total = 0;
-   k = round(width/175);
-   for l = 1:k
+   for l = 1:3
    total = total*10;
    image1 = oImage2(1:end, width*(l-1)/3+1:width*l/3);
    image1 = imresize(image1, [28, 28]);
-   imshow(image1);
-   pause(3);
    image1 = reshape(image1, [784,1]);
-   total = total + getNum(image1);
+   total = total + getNoLoad(image1, finalW1L1, finalW1L2, finalB1L1, finalB1L2, finalSoftmaxTheta );
    end
    disp(total);
    imshow(oImage2);
