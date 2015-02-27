@@ -37,14 +37,21 @@ image = rgb2gray(image); %convert to grayscale
           end
       end
    end
-   oImage2 = oImage(locy:locy+175, locx:locx+width);
+   height = 0;
+   while (oImage(locy+height, locx)==0)
+        height = height+1;
+   end
+   oImage2 = image(locy:locy+height, locx:locx+width);
+   imwrite(oImage2, 'OutImage.jpg', 'jpg');
    total = 0;
-   digits = round(width/175);
+   digits = round(width/height);
    for l = 1:digits %Number of digits is approximately equal to width of the box over height
    total = total*10; %shift left one decimal bit
-   image1 = oImage2(1:end, width*(l-1)/digits+1:width*l/digits);
+   x1 = round(width*(l-1)/digits)+1; x2 = round(width*l/digits);
+   image1 = oImage2(1:end, x1:x2);
    image1 = imresize(image1, [28, 28]); %resize to 28x28 image
    image1 = reshape(image1, [784,1]); %reshape to 784 one dimmensional array
+   image1 = double(image1);
    
    z1 = 1./(1+exp(-(finalW1L1*image1+finalB1L1))); %perform the neural network
    z2 = 1./(1+exp(-(finalW1L2*z1+finalB1L2)));
